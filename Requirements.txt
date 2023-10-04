@@ -1,0 +1,10 @@
+numpy
+seaborn
+statsmodels
+matplotlib
+xgboost
+scikit-learn
+pandas
+gradio
+umap-learn
+streamlit
