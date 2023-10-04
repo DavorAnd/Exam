@@ -31,11 +31,11 @@ Original file is located at
 # !pip install streamlit
 
 import numpy as np #is primarily used for numerical and array-based operations
-import seaborn as sns #is a data visualization library that makes it easy to create attractive and informative statistical graphics
-import statsmodels.api as sm #used for statistical modeling and hypothesis testing. Helps you to analyze data and build statistical models to understand relationships between variables
+# import seaborn as sns #is a data visualization library that makes it easy to create attractive and informative statistical graphics
+# import statsmodels.api as sm #used for statistical modeling and hypothesis testing. Helps you to analyze data and build statistical models to understand relationships between variables
 import matplotlib.pyplot as plt #it allows you to make various types of graphs to help you visualize and understand your data
-from xgboost import XGBRegressor #provides an efficient and powerful algorithm to handle large datasets and perform classification or regression tasks
-from sklearn.metrics import mean_squared_error #it gives you tools for evaluating the performance of machine learning models. It helps you measure how well your model is doing its job
+# from xgboost import XGBRegressor #provides an efficient and powerful algorithm to handle large datasets and perform classification or regression tasks
+# from sklearn.metrics import mean_squared_error #it gives you tools for evaluating the performance of machine learning models. It helps you measure how well your model is doing its job
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder # helps you prepare your data for machine learning. It's like a toolbox for transforming and scaling your data so that it works better with machine learning algorithms.
 from sklearn.preprocessing import StandardScaler
@@ -54,27 +54,27 @@ import streamlit as st
 
 df = pd.read_csv('https://raw.githubusercontent.com/DavorAnd/BDS-Phyton/main/bank_marketing.csv')
 
-"""**EDA SECTION**"""
+# """**EDA SECTION**"""
 
-df.info()
+# df.info()
 
-df.isna().sum()
+# df.isna().sum()
 
-df.columns #Cheking the columns
+# df.columns #Cheking the columns
 
-df.head() # looking at first 5 rows of data
+# df.head() # looking at first 5 rows of data
 
-df.poutcome.unique()
+# df.poutcome.unique()
 
-df.describe() #looking into different statistical values in regards to specific columns
+# df.describe() #looking into different statistical values in regards to specific columns
 
-df.shape # looking at how the data is shaped
+# df.shape # looking at how the data is shaped
 
-df.isnull().sum() # cheking for the empty or null values and we see that there are none
+# df.isnull().sum() # cheking for the empty or null values and we see that there are none
 
-"""**Visualization and filtering **"""
+# """**Visualization and filtering **"""
 
-df.columns
+# df.columns
 
 # merge the loans into one column and dropping the housing and loan
 df['Loans'] = df.apply(lambda row: any(row== "yes"), axis=1)
@@ -83,37 +83,37 @@ df = df.drop(['housing','loan'], axis=1)
 numerical = ['age']
 categorical = ['job', 'education']
 
-#Showing the numerical variables in histoplots
-for column in numerical :
-    plt.hist(df[column], bins= 30)
-    plt.title(f'Distibution of {column}')
-    plt.xlabel(column)
-    plt.ylabel('Frequency')
-    plt.show()
+# #Showing the numerical variables in histoplots
+# for column in numerical :
+#     plt.hist(df[column], bins= 30)
+#     plt.title(f'Distibution of {column}')
+#     plt.xlabel(column)
+#     plt.ylabel('Frequency')
+#     plt.show()
 
-sns.boxplot(data=df, x="campaign")  # outliers are everything abouve 8
+# sns.boxplot(data=df, x="campaign")  # outliers are everything abouve 8
 
 """Filtering the data"""
 
 df = df[df.ne('unknown').all(axis =1)] # dropping all the unknown values in the dataframe
 df = df[df.campaign <= 8]
-sns.boxplot(data=df, x="campaign")
+# sns.boxplot(data=df, x="campaign")
 
 mapping = {'no':False,'yes':True}
 df.replace({"y"  :mapping}, inplace=True)
 
-df.head()
+# df.head()
 df.education = df.education.str.replace('.',' ')
 
 clean_df = df.drop(columns=['marital','default','contact','month','day_of_week','duration','campaign','pdays','previous','emp.var.rate','cons.price.idx','cons.conf.idx','euribor3m','nr.employed','poutcome'], axis=1)
 
-clean_df
+# clean_df
 
-clean_df.education.unique()
+# clean_df.education.unique()
 
 """Scaling  and Encoding  data"""
 
-clean_df
+# clean_df
 
 nums = ['age',	'y',	'Loans']
 cats = ['job',	'education']
@@ -129,7 +129,6 @@ for cat_col in categorical:
 encoded_categorical = clean_df[[col + '_encoded' for col in categorical]]
 X = pd.concat([clean_df[nums], encoded_categorical], axis=1)
 
-encoded_categorical
 
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
@@ -146,27 +145,27 @@ for i in range(1, 11):
     kmeans = KMeans(n_clusters=i, random_state=42)
     kmeans.fit(X_pca_2d)
     clusters.append(kmeans.inertia_)
-plt.figure(figsize=(8,4))
-plt.plot(range(1, 11), clusters, marker='o', linestyle='--')
-plt.xlabel('Number of Clusters')
-plt.ylabel('Inertia')
-plt.title('KMeans Elbow Method for Optimal k')
-plt.show()
+# plt.figure(figsize=(8,4))
+# plt.plot(range(1, 11), clusters, marker='o', linestyle='--')
+# plt.xlabel('Number of Clusters')
+# plt.ylabel('Inertia')
+# plt.title('KMeans Elbow Method for Optimal k')
+# plt.show()
 
 # Conducting KMeans clustering (assuming 3 clusters from the elbow method)
 kmeans = KMeans(n_clusters=3, random_state=0).fit(X_pca_2d)
 df['cluster'] = kmeans.fit_predict(X_pca_2d)
 labels = kmeans.labels_
 
-plt.scatter(X_pca_2d[:, 0], X_pca_2d[:, 1], c=clean_df['cluster'], cmap='viridis')
-plt.xlabel('PCA 1')
-plt.ylabel('PCA 2')
-plt.title('Cluster Visualization')
-plt.show()
+# plt.scatter(X_pca_2d[:, 0], X_pca_2d[:, 1], c=clean_df['cluster'], cmap='viridis')
+# plt.xlabel('PCA 1')
+# plt.ylabel('PCA 2')
+# plt.title('Cluster Visualization')
+# plt.show()
 
 """# Supervised part"""
 
-df
+# df
 
 scaler = StandardScaler()
 SML_X_scaled = scaler.fit_transform(X)
@@ -175,13 +174,10 @@ SML_X_pca = pca.fit_transform(SML_X_scaled)
 
 numerical_cols = ['age', 'y', 'Loans']
 categorical_cols = ['job', 'education']
-assert all(col in clean_df.columns for col in numerical_cols + categorical_cols), "One or more columns not found in clean_df"
 
 SML_X = df.drop('cluster', axis=1)
 SML_y = df['cluster']
-missing_cols = [col for col in numerical_cols + categorical_cols if col not in clean_df.columns]
-if missing_cols:
-  print("Missing columns:", missing_cols)
+
 
 SML_X_train, SML_X_test, SML_y_train, SML_y_test = train_test_split(SML_X, SML_y, test_size=0.2, random_state=42)
 
@@ -198,7 +194,7 @@ preprocessor = ColumnTransformer(
         ('cat', categorical_transformer, categorical_cols)
     ])
 
-SML_X
+
 
 # Logistic Regression pipeline
 lr_pipeline = Pipeline(steps=[
@@ -214,7 +210,7 @@ lr_y_pred = lr_pipeline.predict(SML_X_test)
 
 # Evaluate the model
 lr_accuracy = accuracy_score(SML_y_test, lr_y_pred)
-print(f'Logistic Regression Accuracy: {lr_accuracy:.2f}')
+# print(f'Logistic Regression Accuracy: {lr_accuracy:.2f}')
 
 # Decision Tree pipeline
 dt_pipeline = Pipeline(steps=[
@@ -225,7 +221,7 @@ dt_pipeline = Pipeline(steps=[
 dt_pipeline.fit(SML_X_train, SML_y_train)
 dt_y_pred = dt_pipeline.predict(SML_X_test)
 dt_accuracy = accuracy_score(SML_y_test, dt_y_pred)
-print(f'Decision Tree Accuracy: {dt_accuracy:.2f}')
+# print(f'Decision Tree Accuracy: {dt_accuracy:.2f}')
 
 # Random Forest pipeline
 rf_pipeline = Pipeline(steps=[
@@ -236,14 +232,14 @@ rf_pipeline = Pipeline(steps=[
 rf_pipeline.fit(SML_X_train, SML_y_train)
 rf_y_pred = rf_pipeline.predict(SML_X_test)
 rf_accuracy = accuracy_score(SML_y_test, rf_y_pred)
-print(f'Random Forest Accuracy: {rf_accuracy:.2f}')
+# print(f'Random Forest Accuracy: {rf_accuracy:.2f}')
 
-model_accuracies = pd.DataFrame({
-    'Model': ['Logistic Regression', 'Decision Tree', 'Random Forest'],
-    'Accuracy': [lr_accuracy, dt_accuracy, rf_accuracy]
-})
+# model_accuracies = pd.DataFrame({
+#     'Model': ['Logistic Regression', 'Decision Tree', 'Random Forest'],
+#     'Accuracy': [lr_accuracy, dt_accuracy, rf_accuracy]
+# })
 
-print(model_accuracies)
+# print(model_accuracies)
 
 def predict_cluster(age, job, education, loans):
     user_data = pd.DataFrame({'age': [age], 'job': [job], 'education': [education], 'Loans': [loans]})
