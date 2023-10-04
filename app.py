@@ -33,7 +33,7 @@ Original file is located at
 import numpy as np #is primarily used for numerical and array-based operations
 # import seaborn as sns #is a data visualization library that makes it easy to create attractive and informative statistical graphics
 # import statsmodels.api as sm #used for statistical modeling and hypothesis testing. Helps you to analyze data and build statistical models to understand relationships between variables
-import matplotlib.pyplot as plt #it allows you to make various types of graphs to help you visualize and understand your data
+#import matplotlib.pyplot as plt #it allows you to make various types of graphs to help you visualize and understand your data
 # from xgboost import XGBRegressor #provides an efficient and powerful algorithm to handle large datasets and perform classification or regression tasks
 # from sklearn.metrics import mean_squared_error #it gives you tools for evaluating the performance of machine learning models. It helps you measure how well your model is doing its job
 from sklearn.preprocessing import LabelEncoder
